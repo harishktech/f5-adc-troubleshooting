@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>F5 ADC Troubleshooting Portal</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+<h1>F5 / ADC Engineer Portal</h1>
+
+<input type="text" id="search"
+placeholder="Search F5 troubleshooting commands..."
+onkeyup="searchCommands()">
+</header>
+
+<nav>
+
+<a href="pages/ltm.html">LTM</a>
+<a href="pages/ssl.html">SSL</a>
+<a href="pages/gtm.html">GTM</a>
+<a href="pages/avi.html">AVI</a>
+<a href="pages/tcpdump.html">Packet Capture</a>
+<a href="pages/irules.html">iRules</a>
+<a href="pages/interview.html">Interview Prep</a>
+
+</nav>
+
+<div id="results"></div>
+
+<script src="data/commands.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
