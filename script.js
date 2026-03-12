@@ -1,35 +1,85 @@
-function searchCommands(){
+function analyze(){
 
-let input=document.getElementById("search").value.toLowerCase()
+let issue=document.getElementById("issue").value.toLowerCase()
 
-let output=""
+let result=""
 
-commands.forEach(c=>{
+if(issue.includes("pool")){
 
-if(
-c.title.toLowerCase().includes(input) ||
-c.cmd.toLowerCase().includes(input) ||
-c.desc.toLowerCase().includes(input)
-){
+result=`
 
-output+=`
+<h3>Pool Troubleshooting</h3>
 
-<div class="card">
+1 Check pool status
 
-<h3>${c.title}</h3>
+tmsh show ltm pool
 
-<p>${c.desc}</p>
+2 Check nodes
 
-<div class="command">${c.cmd}</div>
+tmsh show ltm node
 
-</div>
+3 Verify monitor
+
+tmsh list ltm monitor
+
+4 Capture traffic
+
+tcpdump -i 0.0:nnn host <serverIP>
 
 `
 
 }
 
-})
+else if(issue.includes("ssl")){
 
-document.getElementById("results").innerHTML=output
+result=`
+
+<h3>SSL Troubleshooting</h3>
+
+1 Check SSL profile
+
+tmsh list ltm profile client-ssl
+
+2 Verify certificate
+
+tmsh list sys crypto cert
+
+3 Test handshake
+
+openssl s_client -connect VIP:443
+
+`
+
+}
+
+else if(issue.includes("traffic")){
+
+result=`
+
+<h3>Traffic Flow Troubleshooting</h3>
+
+1 Check virtual server
+
+tmsh show ltm virtual
+
+2 Check connections
+
+tmsh show sys connection
+
+3 Capture traffic
+
+tcpdump -i 0.0:nnn host <clientIP>
+
+`
+
+}
+
+else{
+
+result="No match found. Try keywords like pool, ssl, traffic."
+
+}
+
+document.getElementById("solution").innerHTML=result
 
 }
