@@ -9,16 +9,22 @@ if(issue.includes("pool")){
 result = `
 <h3>Pool Troubleshooting</h3>
 
-Step 1<br>
-tmsh show ltm pool<br><br>
+Step 1: List the pool configurations<br>
+tmsh list ltm pool &lt;poolname&gt;<br><br>
 
-Step 2<br>
-tmsh show ltm node<br><br>
+Step 2: Check the status of the members by looking at the state<br>
+tmsh list ltm pool &lt;poolname&gt;<br><br>
 
-Step 3<br>
-Check monitor status<br><br>
+Step 3: Check the assigned Monitor<br>
+tmsh list ltm monitor &lt;monitor type&gt &lt;monitor name&gt;<br><br>
 
-Step 4<br>
+Step 4: Show the members status<br>
+tmsh show ltm pool  &lt;poolname&gt;<br><br>
+
+Step 5: Check monitor status to know the pool status time<br>
+tmsh show ltm monitor &lt;monitor type&gt &lt;monitor name&gt;<br><br>
+
+Step 6: Take packet capture<br>
 tcpdump -i 0.0:nnn host &lt;serverIP&gt;
 `;
 
