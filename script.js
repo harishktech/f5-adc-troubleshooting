@@ -63,3 +63,8 @@ result = "No match found. Try keywords like pool, ssl, traffic.";
 document.getElementById("solution").innerHTML = result;
 
 }
+function toggleMode(){
+
+document.body.classList.toggle("dark")
+
+}
