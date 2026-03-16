@@ -40,4 +40,3 @@ else{
 result="No match found. Try keywords like pool, ssl, traffic."
 }
 document.getElementById("solution").innerHTML=result
-}
