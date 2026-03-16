@@ -1,0 +1,28 @@
+<h2>F5 Packet Capture Generator</h2>
+
+IP Address
+
+<input id="ip">
+
+Port
+
+<input id="port">
+
+<button onclick="generate()">Generate</button>
+
+<div id="result"></div>
+
+<script>
+
+function generate(){
+
+let ip=document.getElementById("ip").value
+let port=document.getElementById("port").value
+
+let cmd="tcpdump -i 0.0:nnn host "+ip+" and port "+port
+
+document.getElementById("result").innerHTML=cmd
+
+}
+
+</script>
