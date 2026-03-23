@@ -19,11 +19,6 @@ c.innerHTML = `
 <div class="card">
 <canvas id="sslChart"></canvas>
 </div>
-setTimeout(() => {
-    if(document.getElementById("trafficChart")){
-        loadCharts();
-    }
-}, 300);
 
 <h2 style="padding:20px;">System Status</h2>
 
@@ -43,7 +38,12 @@ SSL Handshake: <span class="status-up">OK</span>
 GTM DNS: <span class="status-down">DEGRADED</span>
 </div>
 
-`
+`;
+    setTimeout(() => {
+    if(document.getElementById("trafficChart")){
+        loadCharts();
+    }
+}, 300);
 
 }
 
