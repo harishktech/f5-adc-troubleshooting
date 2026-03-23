@@ -68,3 +68,75 @@ function toggleMode(){
 document.body.classList.toggle("dark")
 
 }
+function loadPage(page){
+
+let content = document.getElementById("content")
+
+if(page === "ltm"){
+
+content.innerHTML = `
+<h2>LTM Troubleshooting</h2>
+
+<div class="card">
+<h3>Application Down</h3>
+
+<div class="command">tmsh show ltm virtual</div>
+<div class="command">tmsh show ltm pool</div>
+<div class="command">tmsh show sys connection</div>
+<div class="command">tail -f /var/log/ltm</div>
+</div>
+`
+
+}
+
+else if(page === "ssl"){
+
+content.innerHTML = `
+<h2>SSL Troubleshooting</h2>
+
+<div class="card">
+
+<div class="command">tmsh list ltm profile client-ssl</div>
+<div class="command">tmsh list sys crypto cert</div>
+<div class="command">openssl s_client -connect VIP:443</div>
+
+</div>
+`
+
+}
+
+else if(page === "gtm"){
+
+content.innerHTML = `
+<h2>GTM Troubleshooting</h2>
+
+<div class="card">
+
+<div class="command">tmsh list gtm wideip</div>
+<div class="command">tmsh show gtm dns</div>
+
+</div>
+`
+
+}
+
+else if(page === "tcpdump"){
+
+content.innerHTML = `
+<h2>Packet Capture</h2>
+
+<div class="card">
+
+<input id="ip" placeholder="Enter IP">
+<input id="port" placeholder="Enter Port">
+
+<button onclick="generateTcpdump()">Generate</button>
+
+<div id="tcpdumpOutput"></div>
+
+</div>
+`
+
+}
+
+}
