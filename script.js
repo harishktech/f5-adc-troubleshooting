@@ -1,6 +1,7 @@
 function loadPage(page){
 
 let c = document.getElementById("content")
+let streamInterval;
 
 /* Dashboard */
 if(page === "dashboard"){
@@ -172,61 +173,91 @@ document.body.classList.toggle("dark")
 
 }
 
+let trafficChart;
+let trafficData = [120, 150, 180, 200, 170];
+let labels = ["1","2","3","4","5"];
+
 function loadCharts(){
 
-let trafficCtx = document.getElementById('trafficChart');
-let poolCtx = document.getElementById('poolChart');
-let sslCtx = document.getElementById('sslChart');
+let ctx = document.getElementById("trafficChart");
 
-if(!trafficCtx || !poolCtx || !sslCtx){
-    console.log("Charts not ready");
-    return;
+if(!ctx) return;
+
+/* Destroy old chart if exists */
+if(trafficChart){
+trafficChart.destroy();
 }
 
-/* Traffic */
-new Chart(trafficCtx, {
-type: 'line',
+trafficChart = new Chart(ctx, {
+type: "line",
 data: {
-labels: ["1","2","3","4","5"],
+labels: labels,
 datasets: [{
-label: 'Requests/sec',
-data: [120, 200, 150, 300, 250]
+label: "Requests/sec",
+data: trafficData,
+tension: 0.3,
+borderWidth: 2
 }]
+},
+options: {
+animation: false,
+plugins: {
+legend: {
+labels: {
+color: "white"
+}
+}
+},
+scales: {
+x: {
+ticks: { color: "white" }
+},
+y: {
+ticks: { color: "white" }
+}
 }
 });
 
-/* Pool */
-new Chart(poolCtx, {
-type: 'doughnut',
-data: {
-labels: ["Healthy","Down"],
-datasets: [{
-data: [8,2]
-}]
-}
-});
-
-/* SSL */
-new Chart(sslCtx, {
-type: 'bar',
-data: {
-labels: ["HTTP","HTTPS"],
-datasets: [{
-data: [200,450]
-}]
-}
-});
+/* Start streaming */
+startStreaming();
 
 }
+function startStreaming(){
 
-/* Load default */
-window.onload = function(){
-
-loadPage("dashboard")
-
-}
 setInterval(() => {
 
-loadPage("dashboard")
+/* Remove old data */
+trafficData.shift();
+labels.shift();
 
-}, 5000)
+/* Add new data */
+let newValue = Math.floor(Math.random() * 300) + 100;
+
+trafficData.push(newValue);
+labels.push(new Date().toLocaleTimeString());
+
+/* Update chart */
+trafficChart.update();
+
+}, 1000); // every 1 second
+
+}
+function startStreaming(){
+
+if(streamInterval) return; // prevent duplicates
+
+streamInterval = setInterval(() => {
+
+trafficData.shift();
+labels.shift();
+
+let newValue = Math.floor(Math.random() * 300) + 100;
+
+trafficData.push(newValue);
+labels.push(new Date().toLocaleTimeString());
+
+trafficChart.update();
+
+}, 1000);
+
+}
