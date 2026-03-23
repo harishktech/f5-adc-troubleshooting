@@ -1,118 +1,30 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-
-<title>F5 ADC Troubleshooting Portal</title>
-
-<link rel="stylesheet" href="style.css">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
- 
-</head>
-
-<body>
-
-<div class="container">
-
-<div class="sidebar">
-
-<h2>F5 ADC Portal</h2>
-
-<ul>
-
-<li><a href="../f5-adc-troubleshooting/pages/ltm.html"><i class="fa fa-network-wired"></i> LTM</a></li>
-
-<li><a href="../f5-adc-troubleshooting/pages/ssl.html"><i class="fa fa-lock"></i> SSL</a></li>
-
-<li><a href="../f5-adc-troubleshooting/pages/gtm.html"><i class="fa fa-globe"></i> GTM</a></li>
-
-<li><a href="../f5-adc-troubleshooting/pages/avi.html"><i class="fa fa-server"></i> AVI</a></li>
-
-<li><a href="../f5-adc-troubleshooting/pages/tcpdump.html"><i class="fa fa-search"></i> Packet Capture</a></li>
-
-<li><a href="../f5-adc-troubleshooting/pages/irules.html"><i class="fa fa-code"></i> iRules</a></li>
-
-<li><a href="../f5-adc-troubleshooting/pages/ai-troubleshoot.html"><i class="fa fa-brain"></i> AI Troubleshoot</a></li>
-
-</ul>
-
-</div>
-
 <div class="main">
 
 <header>
-
-<h1>F5 / ADC Engineer Troubleshooting Portal</h1>
-
-<input
-type="text"
-id="search"
-placeholder="Search commands..."
-onkeyup="searchCommands()">
- <button onclick="toggleMode()">Dark Mode</button>
+<h1>F5 / ADC Troubleshooting Portal</h1>
 </header>
 
 <div class="cards">
-<a href="pages/ltm.html" class="card-link">
-<div class="card">
 
-<i class="fa fa-server"></i>
-
+<div class="card" onclick="loadPage('ltm')">
 <h3>LTM Troubleshooting</h3>
-
-<p>Virtual servers, pools, persistence, monitors</p>
-
 </div>
-</a>
 
- <a href="pages/ssl.html" class="card-link">
-<div class="card">
-
-<i class="fa fa-lock"></i>
-
+<div class="card" onclick="loadPage('ssl')">
 <h3>SSL Debug</h3>
-
-<p>Certificate validation, handshake debug</p>
-
 </div>
- </a>
-<a href="pages/connections.html" class="card-link">
-<div class="card">
 
-<i class="fa fa-network-wired"></i>
-
-<h3>Traffic Analysis</h3>
-
-<p>Connection tables and packet flow</p>
-
+<div class="card" onclick="loadPage('gtm')">
+<h3>GTM / DNS</h3>
 </div>
-</a>
-<a href="pages/tcpdump.html" class="card-link">
-<div class="card">
 
-<i class="fa fa-search"></i>
-
+<div class="card" onclick="loadPage('tcpdump')">
 <h3>Packet Capture</h3>
-
-<p>Generate tcpdump commands</p>
-
-</div>
-</a>
-</div>
-
-<div id="results"></div>
-
 </div>
 
 </div>
 
-<script src="data/commands.js"></script>
+<!-- Dynamic content loads here -->
+<div id="content"></div>
 
-<script src="script.js"></script>
-
-</body>
-
-</html>
+</div>
