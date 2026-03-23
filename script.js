@@ -19,7 +19,11 @@ c.innerHTML = `
 <div class="card">
 <canvas id="sslChart"></canvas>
 </div>
-setTimeout(loadCharts, 100);
+setTimeout(() => {
+    if(document.getElementById("trafficChart")){
+        loadCharts();
+    }
+}, 300);
 
 <h2 style="padding:20px;">System Status</h2>
 
@@ -170,44 +174,45 @@ document.body.classList.toggle("dark")
 
 function loadCharts(){
 
-/* Traffic Chart */
 let trafficCtx = document.getElementById('trafficChart');
+let poolCtx = document.getElementById('poolChart');
+let sslCtx = document.getElementById('sslChart');
 
+if(!trafficCtx || !poolCtx || !sslCtx){
+    console.log("Charts not ready");
+    return;
+}
+
+/* Traffic */
 new Chart(trafficCtx, {
 type: 'line',
 data: {
-labels: ["1s","2s","3s","4s","5s","6s"],
+labels: ["1","2","3","4","5"],
 datasets: [{
 label: 'Requests/sec',
-data: [120, 190, 300, 250, 220, 310],
-borderWidth: 2
+data: [120, 200, 150, 300, 250]
 }]
 }
 });
 
-/* Pool Health Chart */
-let poolCtx = document.getElementById('poolChart');
-
+/* Pool */
 new Chart(poolCtx, {
 type: 'doughnut',
 data: {
-labels: ["Healthy", "Down"],
+labels: ["Healthy","Down"],
 datasets: [{
-data: [8, 2]
+data: [8,2]
 }]
 }
 });
 
-/* SSL Traffic Chart */
-let sslCtx = document.getElementById('sslChart');
-
+/* SSL */
 new Chart(sslCtx, {
 type: 'bar',
 data: {
 labels: ["HTTP","HTTPS"],
 datasets: [{
-label: 'Traffic',
-data: [200, 450]
+data: [200,450]
 }]
 }
 });
