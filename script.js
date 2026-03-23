@@ -16,10 +16,8 @@ c.innerHTML = `
 
 `;
 
-/* Ensure DOM is ready */
-setTimeout(() => {
-    loadCharts();
-}, 200);
+/* Load chart AFTER DOM render */
+requestAnimationFrame(loadCharts);
 
 }
 
@@ -148,12 +146,8 @@ document.body.classList.toggle("dark")
 
 }
 
-let trafficChart;
-let trafficData = [120, 150, 180, 200, 170];
-let labels = ["1","2","3","4","5"];
-
-let trafficChart;
-let streamInterval;
+let trafficChart = null;
+let streamInterval = null;
 
 function loadCharts(){
 
@@ -191,9 +185,12 @@ animation: false
 }
 });
 
-/* Start live updates */
-if(streamInterval) clearInterval(streamInterval);
+/* Clear previous interval */
+if(streamInterval){
+clearInterval(streamInterval);
+}
 
+/* Start live updates */
 streamInterval = setInterval(() => {
 
 data.shift();
@@ -247,8 +244,8 @@ labels.push(new Date().toLocaleTimeString());
 trafficChart.update();
 
 }, 1000);
-    window.onload = function(){
-loadPage("dashboard");
 }
 
+window.onload = function(){
+loadPage("dashboard");
 }
