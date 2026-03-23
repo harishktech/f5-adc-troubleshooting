@@ -1,30 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>F5 ADC Dashboard</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="layout">
+
+<!-- Sidebar -->
+<div class="sidebar">
+
+<h2>ADC Portal</h2>
+
+<ul>
+<li onclick="loadPage('dashboard')"><i class="fa fa-home"></i> Dashboard</li>
+<li onclick="loadPage('ltm')"><i class="fa fa-server"></i> LTM</li>
+<li onclick="loadPage('ssl')"><i class="fa fa-lock"></i> SSL</li>
+<li onclick="loadPage('gtm')"><i class="fa fa-globe"></i> GTM</li>
+<li onclick="loadPage('tcpdump')"><i class="fa fa-search"></i> Packet Capture</li>
+<li onclick="loadPage('ai')"><i class="fa fa-brain"></i> AI Assist</li>
+</ul>
+
+</div>
+
+<!-- Main -->
 <div class="main">
 
-<header>
-<h1>F5 / ADC Troubleshooting Portal</h1>
-</header>
+<div class="topbar">
 
-<div class="cards">
+<h1>F5 ADC NOC Dashboard</h1>
 
-<div class="card" onclick="loadPage('ltm')">
-<h3>LTM Troubleshooting</h3>
-</div>
-
-<div class="card" onclick="loadPage('ssl')">
-<h3>SSL Debug</h3>
-</div>
-
-<div class="card" onclick="loadPage('gtm')">
-<h3>GTM / DNS</h3>
-</div>
-
-<div class="card" onclick="loadPage('tcpdump')">
-<h3>Packet Capture</h3>
-</div>
+<button onclick="toggleMode()">🌙</button>
 
 </div>
 
-<!-- Dynamic content loads here -->
 <div id="content"></div>
 
 </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
