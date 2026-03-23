@@ -224,7 +224,7 @@ labels.push(new Date().toLocaleTimeString());
 /* Update chart */
 trafficChart.update();
 
-}, 1000); // every 1 second
+}, 900000); // every 1 second
 
 }
 function startStreaming(){
