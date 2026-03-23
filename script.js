@@ -247,5 +247,8 @@ labels.push(new Date().toLocaleTimeString());
 trafficChart.update();
 
 }, 1000);
+    window.onload = function(){
+loadPage("dashboard");
+}
 
 }
