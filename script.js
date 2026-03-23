@@ -1,152 +1,162 @@
+function loadPage(page){
+
+let c = document.getElementById("content")
+
+/* Dashboard */
+if(page === "dashboard"){
+
+c.innerHTML = `
+
+<h2 style="padding:20px;">System Status</h2>
+
+<div class="card">
+LTM Virtual Servers: <span class="status-up">UP</span>
+</div>
+
+<div class="card">
+Pool Members: <span class="status-up">HEALTHY</span>
+</div>
+
+<div class="card">
+SSL Handshake: <span class="status-up">OK</span>
+</div>
+
+<div class="card">
+GTM DNS: <span class="status-down">DEGRADED</span>
+</div>
+
+`
+
+}
+
+/* LTM */
+else if(page === "ltm"){
+
+c.innerHTML = `
+<h2>LTM Troubleshooting</h2>
+
+<div class="card">
+<div class="command">tmsh show ltm virtual</div>
+<div class="command">tmsh show ltm pool</div>
+<div class="command">tmsh show sys connection</div>
+</div>
+`
+
+}
+
+/* SSL */
+else if(page === "ssl"){
+
+c.innerHTML = `
+<h2>SSL Debug</h2>
+
+<div class="card">
+<div class="command">tmsh list ltm profile client-ssl</div>
+<div class="command">openssl s_client -connect VIP:443</div>
+</div>
+`
+
+}
+
+/* GTM */
+else if(page === "gtm"){
+
+c.innerHTML = `
+<h2>GTM DNS</h2>
+
+<div class="card">
+<div class="command">tmsh list gtm wideip</div>
+<div class="command">tmsh show gtm dns</div>
+</div>
+`
+
+}
+
+/* TCPDUMP */
+else if(page === "tcpdump"){
+
+c.innerHTML = `
+<h2>Packet Capture</h2>
+
+<div class="card">
+
+<input id="ip" placeholder="IP">
+<input id="port" placeholder="Port">
+
+<button onclick="gen()">Generate</button>
+
+<div id="out"></div>
+
+</div>
+`
+
+}
+
+/* AI Assist */
+else if(page === "ai"){
+
+c.innerHTML = `
+<h2>AI Troubleshooting</h2>
+
+<input id="issue" placeholder="Describe issue">
+
+<button onclick="analyze()">Analyze</button>
+
+<div id="solution"></div>
+`
+
+}
+
+}
+
+/* TCPDUMP */
+function gen(){
+
+let ip = document.getElementById("ip").value
+let port = document.getElementById("port").value
+
+document.getElementById("out").innerHTML =
+"tcpdump -i 0.0:nnn host " + ip + " and port " + port
+
+}
+
+/* AI */
 function analyze(){
 
-let issue = document.getElementById("issue").value.toLowerCase();
+let issue = document.getElementById("issue").value.toLowerCase()
 
-let result = "";
+let res = ""
 
 if(issue.includes("pool")){
 
-result = `
-<h3>Pool Troubleshooting</h3>
-
-Step 1: List the pool configurations<br>
-tmsh list ltm pool &lt;poolname&gt;<br><br>
-
-Step 2: Check the status of the members by looking at the state<br>
-tmsh list ltm pool &lt;poolname&gt;<br><br>
-
-Step 3: Check the assigned Monitor<br>
-tmsh list ltm monitor &lt;monitor type&gt &lt;monitor name&gt;<br><br>
-
-Step 4: Show the members status<br>
-tmsh show ltm pool  &lt;poolname&gt;<br><br>
-
-Step 5: Check monitor status to know the pool status time<br>
-tmsh show ltm monitor &lt;monitor type&gt &lt;monitor name&gt;<br><br>
-
-Step 6: Take packet capture<br>
-tcpdump -i 0.0:nnn host &lt;serverIP&gt;
-`;
+res = "Check pool: tmsh show ltm pool"
 
 }
-
 else if(issue.includes("ssl")){
 
-result = `
-<h3>SSL Troubleshooting</h3>
-
-tmsh list ltm profile client-ssl<br>
-tmsh list sys crypto cert<br>
-openssl s_client -connect VIP:443
-`;
+res = "Check SSL: tmsh list ltm profile client-ssl"
 
 }
-
-else if(issue.includes("traffic")){
-
-result = `
-<h3>Traffic Troubleshooting</h3>
-
-tmsh show ltm virtual<br>
-tmsh show sys connection<br>
-tcpdump -i 0.0:nnn host &lt;clientIP&gt;
-`;
-
-}
-
 else{
 
-result = "No match found. Try keywords like pool, ssl, traffic.";
+res = "Try keywords: pool, ssl, traffic"
 
 }
 
-document.getElementById("solution").innerHTML = result;
+document.getElementById("solution").innerHTML = res
 
 }
+
+/* Dark mode */
 function toggleMode(){
 
 document.body.classList.toggle("dark")
 
 }
-function loadPage(page){
 
-let content = document.getElementById("content")
+/* Load default */
+window.onload = function(){
 
-if(page === "ltm"){
-
-content.innerHTML = `
-<h2>LTM Troubleshooting</h2>
-
-<div class="card">
-<h3>Application Down</h3>
-
-<div class="command">tmsh show ltm virtual</div>
-<div class="command">tmsh show ltm pool</div>
-<div class="command">tmsh show sys connection</div>
-<div class="command">tail -f /var/log/ltm</div>
-</div>
-`
-
-}
-
-else if(page === "ssl"){
-
-content.innerHTML = `
-<h2>SSL Troubleshooting</h2>
-
-<div class="card">
-
-<div class="command">tmsh list ltm profile client-ssl</div>
-<div class="command">tmsh list sys crypto cert</div>
-<div class="command">openssl s_client -connect VIP:443</div>
-
-</div>
-`
-
-}
-
-else if(page === "gtm"){
-
-content.innerHTML = `
-<h2>GTM Troubleshooting</h2>
-
-<div class="card">
-
-<div class="command">tmsh list gtm wideip</div>
-<div class="command">tmsh show gtm dns</div>
-
-</div>
-`
-
-}
-
-else if(page === "tcpdump"){
-
-content.innerHTML = `
-<h2>Packet Capture</h2>
-
-<div class="card">
-
-<input id="ip" placeholder="Enter IP">
-<input id="port" placeholder="Enter Port">
-
-<button onclick="generateTcpdump()">Generate</button>
-
-<div id="tcpdumpOutput"></div>
-
-</div>
-`
-
-}
-
-}
-function generateTcpdump(){
-
-let ip = document.getElementById("ip").value
-let port = document.getElementById("port").value
-
-let cmd = "tcpdump -i 0.0:nnn host " + ip + " and port " + port
-
-document.getElementById("tcpdumpOutput").innerHTML = cmd
+loadPage("dashboard")
 
 }
