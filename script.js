@@ -140,3 +140,13 @@ content.innerHTML = `
 }
 
 }
+function generateTcpdump(){
+
+let ip = document.getElementById("ip").value
+let port = document.getElementById("port").value
+
+let cmd = "tcpdump -i 0.0:nnn host " + ip + " and port " + port
+
+document.getElementById("tcpdumpOutput").innerHTML = cmd
+
+}
