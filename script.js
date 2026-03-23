@@ -7,44 +7,19 @@ let streamInterval;
 if(page === "dashboard"){
 
 c.innerHTML = `
+
 <h2 style="padding:20px;">ADC Monitoring Dashboard</h2>
 
 <div class="card">
 <canvas id="trafficChart"></canvas>
 </div>
 
-<div class="card">
-<canvas id="poolChart"></canvas>
-</div>
-
-<div class="card">
-<canvas id="sslChart"></canvas>
-</div>
-
-<h2 style="padding:20px;">System Status</h2>
-
-<div class="card">
-LTM Virtual Servers: <span class="status-up">UP</span>
-</div>
-
-<div class="card">
-Pool Members: <span class="status-up">HEALTHY</span>
-</div>
-
-<div class="card">
-SSL Handshake: <span class="status-up">OK</span>
-</div>
-
-<div class="card">
-GTM DNS: <span class="status-down">DEGRADED</span>
-</div>
-
 `;
-    setTimeout(() => {
-    if(document.getElementById("trafficChart")){
-        loadCharts();
-    }
-}, 300);
+
+/* Ensure DOM is ready */
+setTimeout(() => {
+    loadCharts();
+}, 200);
 
 }
 
@@ -177,51 +152,64 @@ let trafficChart;
 let trafficData = [120, 150, 180, 200, 170];
 let labels = ["1","2","3","4","5"];
 
+let trafficChart;
+let streamInterval;
+
 function loadCharts(){
 
-let ctx = document.getElementById("trafficChart");
+let canvas = document.getElementById("trafficChart");
 
-if(!ctx) return;
+if(!canvas){
+console.log("Canvas not found ❌");
+return;
+}
 
-/* Destroy old chart if exists */
+console.log("Chart loading ✅");
+
+/* Destroy old chart */
 if(trafficChart){
 trafficChart.destroy();
 }
 
-trafficChart = new Chart(ctx, {
+/* Initial Data */
+let data = [100,150,200,180,220];
+let labels = ["1","2","3","4","5"];
+
+/* Create Chart */
+trafficChart = new Chart(canvas, {
 type: "line",
 data: {
 labels: labels,
 datasets: [{
 label: "Requests/sec",
-data: trafficData,
-tension: 0.3,
+data: data,
 borderWidth: 2
 }]
 },
 options: {
-animation: false,
-plugins: {
-legend: {
-labels: {
-color: "white"
-}
-}
-},
-scales: {
-x: {
-ticks: { color: "white" }
-},
-y: {
-ticks: { color: "white" }
-}
+animation: false
 }
 });
 
-/* Start streaming */
-startStreaming();
+/* Start live updates */
+if(streamInterval) clearInterval(streamInterval);
+
+streamInterval = setInterval(() => {
+
+data.shift();
+labels.shift();
+
+let newVal = Math.floor(Math.random()*300)+100;
+
+data.push(newVal);
+labels.push(new Date().toLocaleTimeString());
+
+trafficChart.update();
+
+}, 1000);
 
 }
+
 function startStreaming(){
 
 setInterval(() => {
