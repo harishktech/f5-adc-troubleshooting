@@ -1,128 +1,80 @@
 body{
-
 margin:0;
 font-family:Segoe UI;
 background:#f4f7fb;
-
 }
 
-.container{
-
+.layout{
 display:flex;
-
 }
 
+/* Sidebar */
 .sidebar{
-
-width:250px;
+width:220px;
 background:#0d3b66;
 color:white;
 height:100vh;
 padding:20px;
-
-}
-
-.sidebar h2{
-
-text-align:center;
-
 }
 
 .sidebar ul{
-
 list-style:none;
 padding:0;
-
 }
 
 .sidebar li{
-
 padding:12px;
-margin:8px 0;
-
-}
-
-.sidebar a{
-
-color:white;
-text-decoration:none;
-
+cursor:pointer;
 }
 
 .sidebar li:hover{
-
 background:#1d5fa3;
-border-radius:6px;
-
 }
 
+/* Main */
 .main{
-
 flex:1;
-
 }
 
-header{
-
+/* Topbar */
+.topbar{
 background:white;
-padding:20px;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
-
+padding:15px;
+display:flex;
+justify-content:space-between;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
 }
 
-#search{
-
-width:40%;
-padding:10px;
-margin-top:10px;
-
-}
-
-.cards{
-
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:20px;
-padding:20px;
-
-}
-
+/* Cards */
 .card{
-
 background:white;
 padding:20px;
+margin:20px;
 border-radius:10px;
-text-align:center;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
-transition:0.3s;
-
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
 }
 
-.card i{
-
-font-size:30px;
-color:#0d3b66;
-
+/* Status */
+.status-up{
+color:green;
+font-weight:bold;
 }
 
-.card:hover{
-
-transform:translateY(-5px);
-box-shadow:0 6px 16px rgba(0,0,0,0.2);
-
+.status-down{
+color:red;
+font-weight:bold;
 }
 
-.command{
-
-background:#eee;
-padding:10px;
-margin-top:10px;
-font-family:monospace;
-
-}
+/* Dark mode */
 .dark{
-
 background:#1e1e1e;
 color:white;
+}
 
+.dark .card{
+background:#2b2b2b;
+}
+
+.dark .sidebar{
+background:#111;
 }
