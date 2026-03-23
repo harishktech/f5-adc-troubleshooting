@@ -6,6 +6,20 @@ let c = document.getElementById("content")
 if(page === "dashboard"){
 
 c.innerHTML = `
+<h2 style="padding:20px;">ADC Monitoring Dashboard</h2>
+
+<div class="card">
+<canvas id="trafficChart"></canvas>
+</div>
+
+<div class="card">
+<canvas id="poolChart"></canvas>
+</div>
+
+<div class="card">
+<canvas id="sslChart"></canvas>
+</div>
+setTimeout(loadCharts, 100);
 
 <h2 style="padding:20px;">System Status</h2>
 
@@ -154,9 +168,60 @@ document.body.classList.toggle("dark")
 
 }
 
+function loadCharts(){
+
+/* Traffic Chart */
+let trafficCtx = document.getElementById('trafficChart');
+
+new Chart(trafficCtx, {
+type: 'line',
+data: {
+labels: ["1s","2s","3s","4s","5s","6s"],
+datasets: [{
+label: 'Requests/sec',
+data: [120, 190, 300, 250, 220, 310],
+borderWidth: 2
+}]
+}
+});
+
+/* Pool Health Chart */
+let poolCtx = document.getElementById('poolChart');
+
+new Chart(poolCtx, {
+type: 'doughnut',
+data: {
+labels: ["Healthy", "Down"],
+datasets: [{
+data: [8, 2]
+}]
+}
+});
+
+/* SSL Traffic Chart */
+let sslCtx = document.getElementById('sslChart');
+
+new Chart(sslCtx, {
+type: 'bar',
+data: {
+labels: ["HTTP","HTTPS"],
+datasets: [{
+label: 'Traffic',
+data: [200, 450]
+}]
+}
+});
+
+}
+
 /* Load default */
 window.onload = function(){
 
 loadPage("dashboard")
 
 }
+setInterval(() => {
+
+loadPage("dashboard")
+
+}, 5000)
